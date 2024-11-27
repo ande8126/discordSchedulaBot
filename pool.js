@@ -2,9 +2,9 @@ const pg = require( 'pg' );
 
 //setup pg connection to db w/pool
 const pool = new pg.Pool({
-    database: 'patrickanderson',
-    host: 'localhost',
-    port: 5432,
+    database: process.env.DATABASENAME,
+    host: process.env.HOSTNAME,
+    port: process.env.PORT,
     max: 10,
     idleTimeoutMillis: 20000 //20 seconds to connect
 })
@@ -18,4 +18,4 @@ pool.on( 'error', error =>{
     console.log('error connecting to db', error );
 })
 
-module.exports = pool;
+module.exports = pool
