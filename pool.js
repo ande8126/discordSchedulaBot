@@ -1,4 +1,6 @@
+require('dotenv').config;
 const pg = require( 'pg' );
+
 
 //setup pg connection to db w/pool
 const pool = new pg.Pool({
