@@ -6,7 +6,7 @@ const pg = require( 'pg' );
 const pool = new pg.Pool({
     database: process.env.DATABASENAME,
     host: process.env.HOSTNAME,
-    port: process.env.PORT,
+    port: process.env.DBPORT,
     max: 10,
     idleTimeoutMillis: 20000 //20 seconds to connect
 })

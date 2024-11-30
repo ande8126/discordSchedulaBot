@@ -3,7 +3,7 @@
 const express = require('express');
 const bodyParser = require( 'body-parser' );
 const app = express();
-const port = 5001;
+const port = process.env.APIPORT;
 
 //setup body-parser to translate body to JSON
 app.use( bodyParser.urlencoded({ extended: true }));
