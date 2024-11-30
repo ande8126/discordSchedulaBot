@@ -13,7 +13,7 @@ router.get( '/', ( req, res )=>{
         res.send( results.rows );
     })
     .catch(error=>{
-        console.log( 'error getting back from tasks', error );
+        console.log( 'error getting back from events', error );
         res.sendStatus( 500 );
     })
 }) 
@@ -31,7 +31,7 @@ router.post( '/', ( req, res )=>{
         res.sendStatus( 201 );
     })
     .catch( (error)=>{
-        console.log( 'error getting back from tasks', error );
+        console.log( 'error getting back from events', error );
         res.sendStatus( 500 );
     })
 })
