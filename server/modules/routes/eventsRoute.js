@@ -6,7 +6,7 @@ const pool = require( '../pool' );
 //Get route to show events
 router.get( '/', ( req, res )=>{
     console.log( 'in eventsRoute GET' );
-    let queryText = `SELECT * FROM events ORDER BY id;`;
+    let queryText = `SELECT eventname, eventdate, eventtime, description, owner, assigner FROM events ORDER BY id;`;
     pool.query( queryText )
     .then( results =>{
         //send back results from task list
@@ -24,8 +24,8 @@ router.post( '/', ( req, res )=>{
     let newEvent = req.body;
     console.log( 'in eventsRoute POST', req.body );
     //send query over to db
-    let queryText = `INSERT INTO events (eventname, task, status) VALUES ($1, $2, $3, $4, $5, FALSE);`;
-    pool.query( queryText, [newEvent.eventname, newEvent.eventdate, newEvent.eventtime, newEvent.description, newEvent.assigner, newEvent.owner])
+    let queryText = `INSERT INTO events (eventname, eventdate, eventtime, description, assigner, owner, channel, server) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
+    pool.query( queryText, [newEvent.eventname, newEvent.eventdate, newEvent.eventtime, newEvent.description, newEvent.assigner, newEvent.owner, newEvent.channel, newEvent.server])
     .then( (results)=>{
         //send status-created
         res.sendStatus( 201 );
