@@ -1,10 +1,10 @@
-require('dotenv').config
+require('dotenv').config();
 
 const { Client, GatewayIntentBits } = require('discord.js');
 const axios = require('axios');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent ]});
-const apiUrl = process.env.API_URL || 'http://localhost:5001';
+const apiUrl = process.env.APIURL || 'http://localhost:5001';
 
 client.once('ready', ()=> {
     console.log(`logged in as ${client.user.tag}!`);
@@ -18,6 +18,8 @@ client.on('messageCreate', async (message) => {
         const description = descParts.join(' ');
         const assigner = message.author.username;
         const owner = descParts.slice(-1)[0]; //last word is owner
+        const channelId = message.channel.id;
+        const serverId = message.guild.id;
 
         try {
             const response = await axios.post(`${apiUrl}/events`, {
@@ -26,7 +28,9 @@ client.on('messageCreate', async (message) => {
                 eventTime, 
                 description, 
                 assigner, 
-                owner
+                owner,
+                channelId,
+                serverId
         });
             message.channel.send(`Event "${response.eventName}" created for ${response.eventDate} at ${response.eventTime}.`);
         } catch (err) {
@@ -35,7 +39,7 @@ client.on('messageCreate', async (message) => {
         }
     } else if (message.content.startsWith('!events')) {
         try {
-            const response = await axios.get(`${API_URL}/events`);
+            const response = await axios.get(`${apiUrl}/events`)
             if (response.data.length === 0) {
                 message.channel.send('No upcoming events.');
             } else {

@@ -19,13 +19,13 @@ router.get( '/', ( req, res )=>{
 }) 
 
 //POST route to allow users to send new events to db
-router.post( '/', ( req, res )=>{
+router.post( '/events', ( req, res )=>{
     //bring in post from client with req.body
     let newEvent = req.body;
     console.log( 'in eventsRoute POST', req.body );
     //send query over to db
-    let queryText = `INSERT INTO events (eventname, eventdate, eventtime, description, assigner, owner, channel, server) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
-    pool.query( queryText, [newEvent.eventname, newEvent.eventdate, newEvent.eventtime, newEvent.description, newEvent.assigner, newEvent.owner, newEvent.channel, newEvent.server])
+    let queryText = `INSERT INTO events (eventname, eventdate, eventtime, description, assigner, owner, channelid, serverid) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
+    pool.query( queryText, [newEvent.eventName, newEvent.eventDate, newEvent.eventTime, newEvent.description, newEvent.assigner, newEvent.owner, newEvent.channelId, newEvent.serverId])
     .then( (results)=>{
         //send status-created
         res.sendStatus( 201 );
@@ -35,3 +35,5 @@ router.post( '/', ( req, res )=>{
         res.sendStatus( 500 );
     })
 })
+
+module.exports = router;
